@@ -8,17 +8,19 @@ import java.awt.event.MouseListener;
 import javax.swing.JPanel;
 
 
+@SuppressWarnings("serial")
 public class LifePanel extends JPanel {
 	private int _windowSize;
 	private int _gridSize;
-	private LifeModel _lifeModel;
+	private AbstractModel _lifeModel;
+	private int _currentSelection = 1;
 
 	public LifePanel(int windowSize, int gridSize){
 		super();
 		this._windowSize = windowSize;
 		this._gridSize = gridSize;
 		this._lifeModel = new LifeModel(windowSize, gridSize);
-		this._lifeModel.generateRandom(.25);
+//		this._lifeModel.generateRandom(.5);
 		this.addMouseListener(new MouseListener(){
 
 			@Override
@@ -27,7 +29,7 @@ public class LifePanel extends JPanel {
 				int i = (int)Math.floor(arg0.getX() / _gridSize);
 				int j = (int)Math.floor(arg0.getY() / _gridSize);
 				
-				_lifeModel.setLifeAt(i, j, arg0.getButton() == MouseEvent.BUTTON1 ? 2 : 0);
+				_lifeModel.setLifeAt(i, j, arg0.getButton() == MouseEvent.BUTTON1 ? _currentSelection : 0);
 				repaint();
 				
 			}
@@ -59,10 +61,27 @@ public class LifePanel extends JPanel {
 		});
 	}
 	
-	public LifeModel getLifeModel(){return _lifeModel;}
+	public void setSelection(int i){ _currentSelection = i;}
+	
+	public AbstractModel getLifeModel(){return _lifeModel;}
 	
 	public void tick(){
 		_lifeModel.tick();
+		this.repaint();
+	}
+	
+	public void Reset(int modelType){
+		//TODO make it configurable to which model is desired
+		if (modelType == 0){
+		this._lifeModel = new LifeModel(_windowSize, _gridSize);
+		} else if (modelType == 1){
+			this._lifeModel = new WireModel(_windowSize, _gridSize);
+		}
+		this.repaint();
+	}
+	
+	public void GenerateRandom(double percentCoverage){
+		this._lifeModel.generateRandom(percentCoverage);
 		this.repaint();
 	}
 	
@@ -70,7 +89,7 @@ public class LifePanel extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.setColor(Color.BLACK);
-		for (int i = _gridSize; i < _windowSize; i += _gridSize) {
+		for (int i = 0; i <= _windowSize; i += _gridSize) {
 			g.drawLine(0, i, _windowSize, i);
 			g.drawLine(i, 0, i, _windowSize);
 		}
@@ -86,6 +105,10 @@ public class LifePanel extends JPanel {
 						g.setColor(Color.BLACK);
 					else if (value == 2)
 						g.setColor(Color.BLUE);
+					else if (value == 3)
+						g.setColor(Color.RED);
+					else if (value == 4)
+						g.setColor(Color.GREEN);
 					
 					g.fillRect(i * _gridSize, j * _gridSize, _gridSize, _gridSize);
 				}
