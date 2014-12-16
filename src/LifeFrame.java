@@ -84,6 +84,17 @@ public class LifeFrame extends JFrame implements ActionListener {
 		resetPanel.setLayout(new FlowLayout());
 		resetPanel.add(resetButton);
 		resetPanel.add(resetWireButton);
+		
+		JButton setToOneButton = new JButton("Set all to 1");
+		setToOneButton.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				_drawingPanel.SetAllTo(1);
+			}
+			
+		});
+		
 
 		
 		//radio Buttons
@@ -121,13 +132,14 @@ public class LifeFrame extends JFrame implements ActionListener {
 		rPanel.add(btn4);
 		
 		JPanel buttonPanel = new JPanel();
-		buttonPanel.setLayout(new GridLayout(6, 1));
+		buttonPanel.setLayout(new GridLayout(0, 1));
 		buttonPanel.add(tickButton, 0, 0);
 		buttonPanel.add(stopButton, 2, 0);
 		buttonPanel.add(startButton, 1, 0);
 		buttonPanel.add(resetPanel, 3,0);
 		buttonPanel.add(randomButton,4,0);
 		buttonPanel.add(rPanel, 5,0);
+		buttonPanel.add(setToOneButton, 6, 0);
 		
 
 		this.setLayout(new FlowLayout());

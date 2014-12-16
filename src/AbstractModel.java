@@ -39,6 +39,16 @@ public abstract class AbstractModel {
 	public int getNeighborsCount(int i, int j) {
 		return getNeighbors(i, j).size();
 	}
+	
+	public void changeAllTo(int value){
+		for(int i = 0; i < rows; i++){
+			for (int j = 0; j < rows; j++){
+				if (_life[i][j] != 0){
+					_life[i][j] = value;
+				}
+			}
+		}
+	}
 
 	public List<Integer> getNeighbors(int i, int j) {
 		ArrayList<Integer> list = new ArrayList<Integer>();

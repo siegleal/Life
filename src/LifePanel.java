@@ -80,6 +80,11 @@ public class LifePanel extends JPanel {
 		this.repaint();
 	}
 	
+	public void SetAllTo(int set){
+		this._lifeModel.changeAllTo(set);
+		this.repaint();
+	}
+	
 	public void GenerateRandom(double percentCoverage){
 		this._lifeModel.generateRandom(percentCoverage);
 		this.repaint();
